@@ -16,7 +16,7 @@ const ReceiverDetails = () => {
 
       <form className="mt-8 p-2 md:p-10 bg-slate-50 max-w-[700px] flex flex-col justify-center">
         <div>
-          <div className="flex justify-start space-x-4 border-[4px] border-red-500">
+          <div className="flex justify-start space-x-4">
             <input
               type="text"
               className="bg-transparent border-b-[1px] border-gray-500 outline-none  placeholder:text-gray-800 md:w-[400px]"
@@ -41,7 +41,7 @@ const ReceiverDetails = () => {
           <div className="mt-8 flex justify-start space-x-4">
             <input
               type="text"
-              className="bg-transparent outline-none border-[4px] border-red-500 placeholder:text-gray-800 w-full md:w-[400px]"
+              className="bg-transparent outline-none placeholder:text-gray-800 w-full md:w-[400px]"
               placeholder="Email address"
             />
           </div>
@@ -56,7 +56,7 @@ const ReceiverDetails = () => {
             />
             <input
               type="text"
-              className="p-1 bg-transparent outline-none border-[4px] border-red-500 placeholder:text-gray-800 w-[400px]"
+              className="p-1 bg-transparent outline-none placeholder:text-gray-800 w-[400px]"
               placeholder="Mobile number"
             />
           </div>

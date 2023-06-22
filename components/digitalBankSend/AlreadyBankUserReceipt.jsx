@@ -119,7 +119,7 @@ const AlreadyBankUserReceipt = () => {
                 type="text"
                 className="bg-transparent flex flex-col outline-none md:w-[400px]"
               >
-                <p className="uppercase">Payout location</p>
+                <p className="uppercase">Payout</p>
                 <hr className="h-[2px] bg-gray-500" />
                 <p>Romania</p>
               </div>

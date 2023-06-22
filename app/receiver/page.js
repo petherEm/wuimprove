@@ -42,7 +42,7 @@ const Receiver = () => {
 
           <form className="mt-8 p-2 md:p-10 bg-slate-50 md:max-w-[700px] flex flex-col justify-center">
             <div>
-              <div className="flex justify-start space-x-4">
+              <div className="flex flex-col md:flex-row justify-start space-y-4 md:space-y-0 md:space-x-4">
                 <input
                   type="text"
                   className="bg-transparent outline-none border-b-[1px] border-gray-500 placeholder:text-gray-800 md:w-[400px]"
@@ -68,17 +68,21 @@ const Receiver = () => {
                   placeholder="Email address (optional)"
                 />
               </div>
-              <div className="mt-8 flex justify-start space-x-4">
+              <div className="mt-8 flex flex-col md:flex-row justify-start space-y-4 md:space-y-0 md:space-x-4">
                 <input
                   type="text"
                   className="bg-transparent outline-none border-b-[1px] border-gray-500 placeholder:text-gray-800 md:w-[400px]"
                   placeholder="Country Code (40 RO)"
                 />
-                <input
-                  type="text"
-                  className="p-1 bg-transparent outline-none border-b-[1px] border-gray-500 placeholder:text-gray-800 md:w-[400px]"
-                  placeholder="Phone number (optional)"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="p-1 bg-transparent outline-none border-b-[1px] border-gray-500 placeholder:text-gray-800 md:w-[400px]"
+                    placeholder="Phone number (optional)"
+                  />
+                  {/* Pointer */}
+                  <div className="absolute -top-1 right-1 h-5 w-5 rounded-full bg-red-600 animate-pulse" />
+                </div>
               </div>
               <div className="mt-8 flex flex-col gap-y-6">
                 <input
@@ -141,9 +145,10 @@ const Receiver = () => {
           </div>
 
           {/* SPACE FOR UPSELLLLLLLLLL ???  */}
-          <div className="hidden md:flex border-4 border-red-600 w-fit">
-            <label htmlFor="my-modal-6" className="btn">
-              modal
+          <div className="relative hidden md:flex w-fit">
+            <label htmlFor="my-modal-6" className="">
+              {/* Pointer */}
+              <div className="absolute top-8 -right-1 h-5 w-5 rounded-full bg-red-600 animate-pulse cursor-pointer" />
             </label>
             {/* UPSELLLLLLLLLL ???  */}
             <div className="mt-8 p-4 max-w-[400px]">
@@ -157,7 +162,7 @@ const Receiver = () => {
         <div className="p-10">
           <div>
             <h1 className="text-white text-center mt-2 mb-4">
-              Option A (current)
+              Option A (PREVIOUS)
             </h1>
             <div className="mockup-phone border-primary">
               <div className="camera"></div>
@@ -241,9 +246,9 @@ const Receiver = () => {
         <div className="p-10">
           <div>
             <h1 className="text-white text-center mt-2 mb-4">
-              Option C (above 1000 RON)
+              Option C (CURRENT)
             </h1>
-            <div className="mockup-phone border-primary">
+            <div className="mockup-phone border-secondary">
               <div className="camera"></div>
               <div className="display">
                 <div className="artboard artboard-demo phone-3">

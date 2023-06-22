@@ -24,7 +24,7 @@ const RegistrationScreen = () => {
       {/* Home Screen */}
 
       <div className="flex flex-col">
-        <div className="flex flex-col px-2 md:px-4 text-white">
+        <div className="flex flex-col px-0 md:px-4 text-white">
           <header className="mt-2 flex items-center justify-center">
             <Image src="/wulogo.svg" width="280" height="150" />
           </header>

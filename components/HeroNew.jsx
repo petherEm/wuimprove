@@ -7,6 +7,8 @@ import { BsShieldFillCheck } from "react-icons/bs";
 import { AiFillInfoCircle } from "react-icons/ai";
 import ReactFlagsSelect from "react-flags-select";
 
+import { usePayStore } from "@/store/PayStore";
+
 const fetchRates = async (url) => {
   const res = await fetch(url);
   const data = await res.json();
@@ -14,8 +16,24 @@ const fetchRates = async (url) => {
 };
 
 const HeroNew = () => {
-  const [select, setSelect] = useState("PL");
-  const [currency, setCurrency] = useState("PLN");
+  const [
+    fundsInAmount,
+    setFundsInAmount,
+    country,
+    setCountry,
+    currency,
+    setCurrency,
+  ] = usePayStore((state) => [
+    state.fundsInAmount,
+    state.setFundsInAmount,
+    state.country,
+    state.setCountry,
+    state.currency,
+    state.setCurrency,
+  ]);
+
+  // const [select, setSelect] = useState("PL");
+  // const [currency, setCurrency] = useState("PLN");
   const [rates, setRates] = useState("4.5612");
 
   useEffect(() => {
@@ -30,36 +48,36 @@ const HeroNew = () => {
 
   useEffect(() => {
     updateCodes();
-  }, [select]);
+  }, [country]);
 
   const onSelect = (code) => {
-    setSelect(code);
-    console.log("SELECT", select);
+    setCountry(code);
+    console.log("SELECT", country);
     console.log("currency", currency);
   };
 
   const updateCodes = () => {
-    if (select === "PL") {
+    if (country === "PL") {
       setCurrency("PLN");
-    } else if (select === "RO") {
+    } else if (country === "RO") {
       setCurrency("RON");
-    } else if (select === "UA") {
+    } else if (country === "UA") {
       setCurrency("UAH");
-    } else if (select === "US") {
+    } else if (country === "US") {
       setCurrency("USD");
-    } else if (select === "DE") {
+    } else if (country === "DE") {
       setCurrency("EUR");
-    } else if (select === "fi") {
+    } else if (country === "fi") {
       setCurrency("EUR");
-    } else if (select === "GB") {
+    } else if (country === "GB") {
       setCurrency("GBP");
-    } else if (select === "IE") {
+    } else if (country === "IE") {
       setCurrency("EUR");
-    } else if (select === "IT") {
+    } else if (country === "IT") {
       setCurrency("EUR");
-    } else if (select === "NL") {
+    } else if (country === "NL") {
       setCurrency("EUR");
-    } else if (select === "SE") {
+    } else if (country === "SE") {
       setCurrency("SEK");
     }
   };
@@ -70,7 +88,7 @@ const HeroNew = () => {
       <div className="md:flex-[60%] p-4 md:p-10 lg:p-24">
         <div>
           <h1 className="text-5xl md:text-6xl font-bold">
-            International money transfer from <br />  virtually anywhere
+            International money transfer from <br /> virtually anywhere
           </h1>
           <h2 className="text-lg md:text-2xl mt-6">
             Be it a small gift, money to support your loved ones or welcome
@@ -82,11 +100,14 @@ const HeroNew = () => {
 
         {/* drop downs */}
         <div className="mt-8 flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-          <div data-theme="light" className="bg-white h-[70px] md:h-[60px] rounded-xl">
+          <div
+            data-theme="light"
+            className="bg-white h-[70px] md:h-[60px] rounded-xl"
+          >
             <label className="text-[14px] p-2 text-gray-400">Send to</label>
             <ReactFlagsSelect
               className="bg-white text-center h-[40px] w-60 rounded-xl outline-none focus:outline-none"
-              selected={select}
+              selected={country}
               onSelect={onSelect}
               countries={[
                 "PL",
@@ -127,6 +148,7 @@ const HeroNew = () => {
               type="text"
               className="px-4 bg-white text-left h-[75px] md:h-[60px] w-52 rounded-xl outline-none py-1"
               placeholder="100.00 EUR"
+              onChange={(e) => setFundsInAmount(e.target.value)}
             />
           </div>
         </div>
@@ -176,7 +198,7 @@ const HeroNew = () => {
         </div> */}
 
         {/* New Offer 2 */}
-        
+
         {/* <div className="mt-6 rounded-lg bg-orange-800 text-white w-fit px-4 py-1">
           <h1>
             <span className="font-bold">0EUR transfer fee </span>on your XX

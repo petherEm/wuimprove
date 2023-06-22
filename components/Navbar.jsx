@@ -6,14 +6,13 @@ import Link from "next/link";
 import { TbWorld } from "react-icons/tb";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-
 const Navbar = () => {
   return (
     <nav className="bg-black/70 h-[80px] max-w-7xl flex items-center justify-between mx-auto">
-      <Link href="/">
+      <Link href="/" className="flex flex-col items-center">
         <Image src="/wulogo.svg" width={220} height={220} />
-        <p className="hidden md:inline-block text-white text-center text-[14px]">
-          Developed by Piotr
+        <p className="hidden md:inline-block text-white text-center text-[13px]">
+          Ideation phase - coded by PM
         </p>
       </Link>
 
@@ -31,73 +30,75 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-2 shadow bg-black w-52"
+              className="dropdown-content menu p-2 shadow bg-black w-52 z-50"
             >
               <li>
-                <p>Find locations</p>
+                <p className="text-red-400">Find locations</p>
               </li>
               <li>
-                <p>Help</p>
+                <p className="text-red-400">Help</p>
               </li>
               <li>
-                <p>Profile</p>
+                <p className="text-red-400">Profile</p>
               </li>
               <hr className="h-1 " />
               <li>
-                <Link href="/" className="text-red-400">
+                <Link href="/" className="text-green-400">
                   Landing
                 </Link>
               </li>
               <li>
-                <Link href="/send" className="text-red-400">
+                <Link href="/send" className="text-green-400">
                   SMO
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="text-red-400">
+                <Link href="/register" className="text-green-400">
                   Register
                 </Link>
               </li>
               <li>
-                <Link href="/receiver" className="text-red-400">
+                <Link href="/receiver" className="text-green-400">
                   Receiver
                 </Link>
               </li>
               <li>
-                <Link href="/receipt" className="text-red-400">
+                <Link href="/receipt" className="text-green-400">
                   Receipt
                 </Link>
               </li>
 
               <hr className="h-1 " />
               <li>
-                <Link href="/bank" className="text-red-400">
+                <Link href="/bank" className="text-orange-400">
                   Bank
                 </Link>
               </li>
               <li>
-                <Link href="/banknew" className="text-red-400">
-                  Bank New
+                <Link href="/banknew" className="text-orange-400">
+                  Bank Alternative
                 </Link>
               </li>
               <li>
-                <Link href="/digitalbanksend" className="text-indigo-400">
+                <Link href="/digitalbanksend" className="text-orange-400">
                   Send to WUDB
                 </Link>
               </li>
               <li>
-                <Link href="/appflow" className="text-indigo-400">
+                <Link href="/appflow" className="text-orange-400">
                   App NEW flow
                 </Link>
               </li>
+              <hr className="h-1 " />
               <li>
-                <Link href="/tracker" className="text-indigo-400">
+                <Link href="/tracker" className="text-green-400">
                   Tracker
                 </Link>
               </li>
             </ul>
           </div>
         </div>
+
         <Link href="/" className="flex items-center hover:bg-slate-500 p-2">
           <div className="dropdown dropdown-hover bg-transparent">
             <label tabIndex={0} className="btn m-1">
@@ -118,9 +119,9 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <Link href="/">Register</Link>
+        <Link href="/register">Register</Link>
         <Link
-          href="/sign-in"
+          href="/register"
           className="border-2 border-yellow-400 rounded-full px-4 py-2 text-yellow-400 hover:text-yellow-600"
         >
           Log in
@@ -131,7 +132,7 @@ const Navbar = () => {
 
       <div className="md:hidden flex items-center space-x-4 text-white">
         <div className="hover:bg-slate-500 p-2">
-          <div className="dropdown dropdown-bottom dropdown-end dropdown-hover">
+          <div className="dropdown dropdown-bottom dropdown-end dropdown-hover z-50">
             <label tabIndex={0} className="btn m-1">
               <GiHamburgerMenu className="text-4xl text-yellow-400" />
             </label>
@@ -150,49 +151,49 @@ const Navbar = () => {
               </li>
               <hr className="h-1 " />
               <li>
-                <Link href="/" className="text-red-400">
+                <Link href="/" className="text-green-400">
                   Landing
                 </Link>
               </li>
               <li>
-                <Link href="/send" className="text-red-400">
+                <Link href="/send" className="text-green-400">
                   SMO
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="text-red-400">
+                <Link href="/register" className="text-green-400">
                   Register
                 </Link>
               </li>
               <li>
-                <Link href="/receiver" className="text-red-400">
+                <Link href="/receiver" className="text-green-400">
                   Receiver
                 </Link>
               </li>
               <li>
-                <Link href="/receipt" className="text-red-400">
+                <Link href="/receipt" className="text-green-400">
                   Receipt
                 </Link>
               </li>
 
               <hr className="h-1 " />
               <li>
-                <Link href="/bank" className="text-red-400">
+                <Link href="/bank" className="text-orange-400">
                   Bank
                 </Link>
               </li>
               <li>
-                <Link href="/banknew" className="text-red-400">
+                <Link href="/banknew" className="text-orange-400">
                   Bank New
                 </Link>
               </li>
               <li>
-                <Link href="/digitalbanksend" className="text-indigo-400">
+                <Link href="/digitalbanksend" className="text-orange-400">
                   Send to WUDB
                 </Link>
               </li>
               <li>
-                <Link href="/appflow" className="text-indigo-400">
+                <Link href="/appflow" className="text-orange-400">
                   App NEW flow
                 </Link>
               </li>

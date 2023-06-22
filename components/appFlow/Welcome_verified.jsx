@@ -55,7 +55,7 @@ const Welcome_verified = () => {
       <div className="flex flex-col">
         <div className="flex flex-col px-4 text-white">
           <div className="alert alert-success shadow-lg">
-            <div>
+            <div className="flex items-center justify-center text-[12px]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="stroke-current flex-shrink-0 h-6 w-6"

@@ -61,7 +61,7 @@ const NoBankUser = () => {
               type="text"
               className="bg-transparent flex flex-col outline-none md:w-[400px]"
             >
-              <p className="uppercase">Payout location</p>
+              <p className="uppercase">Payout</p>
               <hr className="h-[2px] bg-gray-500" />
               <p>Romania</p>
             </div>
@@ -135,7 +135,7 @@ const NoBankUser = () => {
                 placeholder="Purpose of transaction"
               />
             </div>
-            <button className="mt-8 mb-8 mx-auto w-[600px] bg-blue-500 text-white py-4 text-lg">
+            <button className="mt-8 mb-8 mx-auto w-full md:w-[600px] bg-blue-500 text-white py-4 text-lg">
               Continue
             </button>
           </div>

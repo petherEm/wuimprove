@@ -36,7 +36,7 @@ const AppFlow = () => {
             <div className="mockup-phone border-primary bg-black">
               <div className="camera"></div>
               <div className="display">
-                <div className="artboard artboard-demo phone-5">
+                <div className="artboard artboard-demo phone-1 md:phone-5">
                   <div className="artboard__content bg-black overflow-scroll">
                     <div className="flex h-auto min-h-[300px] flex-col items-center justify-between p-2 text-white md:mt-[50px]">
                       <RegistrationSplit />
@@ -52,7 +52,7 @@ const AppFlow = () => {
             <div className="mockup-phone border-primary bg-black">
               <div className="camera"></div>
               <div className="display">
-                <div className="artboard artboard-demo phone-5 bg-black">
+                <div className="artboard artboard-demo phone-1 md:phone-5 bg-black">
                   <div className="artboard__content bg-black overflow-scroll">
                     <div className="flex h-auto min-h-[300px] flex-col items-center justify-between p-2 text-white md:mt-[50px]">
                       {/* <TrackTransfer_old /> */}
@@ -69,7 +69,7 @@ const AppFlow = () => {
             <div className="mockup-phone border-primary bg-black">
               <div className="camera"></div>
               <div className="display">
-                <div className="artboard artboard-demo phone-5 bg-black">
+                <div className="artboard artboard-demo phone-1 md:phone-5 bg-black">
                   <div className="artboard__content bg-black overflow-scroll">
                     <div className="flex h-auto min-h-[300px] flex-col items-center justify-between p-2 text-white md:mt-[50px]">
                       <RegistrationScreen />
@@ -85,7 +85,7 @@ const AppFlow = () => {
             <div className="mockup-phone border-primary bg-black">
               <div className="camera"></div>
               <div className="display">
-                <div className="artboard p-0 phone-5 bg-black">
+                <div className="artboard p-0 phone-1 md:phone-5 bg-black">
                   <div className="artboard__content bg-black overflow-scroll">
                     <div className="flex h-auto min-h-[300px] max-h-[800px] flex-col items-center justify-between p-2 text-white md:mt-[50px]">
                       <RegistrationScreen2 />
@@ -101,7 +101,7 @@ const AppFlow = () => {
             <div className="mockup-phone border-primary bg-black">
               <div className="camera"></div>
               <div className="display">
-                <div className="artboard artboard-demo phone-5 bg-black">
+                <div className="artboard artboard-demo phone-1 md:phone-5 bg-black">
                   <div className="artboard__content bg-black overflow-scroll">
                     <div className="flex h-auto min-h-[300px] flex-col items-center justify-between p-2 text-white md:mt-[50px]">
                       <RegistrationScreen3 />
@@ -117,7 +117,7 @@ const AppFlow = () => {
             <div className="mockup-phone border-primary bg-black">
               <div className="camera"></div>
               <div className="display">
-                <div className="artboard artboard-demo bg-black phone-5">
+                <div className="artboard artboard-demo bg-black phone-1 md:phone-5">
                   <div className="artboard__content bg-black overflow-scroll">
                     <div className="flex bg-black h-[1200px] min-h-[300px] flex-col items-center justify-between p-2 text-white md:mt-[50px]">
                       <Welcome_verified />

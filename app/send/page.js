@@ -6,6 +6,10 @@ import Image from "next/image";
 import ReactFlagsSelect from "react-flags-select";
 import Link from "next/link";
 
+import { usePayStore } from "@/store/PayStore";
+import Summary from "@/components/Summary";
+import countries from "@/utils/allowedCountries";
+
 const fetchRates = async (url) => {
   const res = await fetch(url);
   const data = await res.json();
@@ -14,12 +18,42 @@ const fetchRates = async (url) => {
 };
 
 const SendMoney = () => {
+  const [
+    fundsInAmount,
+    setFundsInAmount,
+    fundsIn,
+    fundsOut,
+    setFundsIn,
+    setFundsOut,
+    country,
+    setCountry,
+    currency,
+    setCurrency,
+    fee,
+    setFee,
+  ] = usePayStore((state) => [
+    state.fundsInAmount,
+    state.setFundsInAmount,
+    state.fundsIn,
+    state.fundsOut,
+    state.setFundsIn,
+    state.setFundsOut,
+    state.country,
+    state.setCountry,
+    state.currency,
+    state.setCurrency,
+    state.fee,
+    state.setFee,
+  ]);
+
   const [select, setSelect] = useState("PL");
   const [name, setName] = useState("Poland");
   const [bannerROPL, setBannerROPL] = useState(false);
-  const [currency, setCurrency] = useState("PLN");
+  // const [currency, setCurrency] = useState("PLN");
   const [rates, setRates] = useState("4.5612");
   const [sendAmount, setSendAmount] = useState("0");
+
+  console.log(fundsInAmount);
 
   useEffect(() => {
     fetchRates(
@@ -33,56 +67,56 @@ const SendMoney = () => {
 
   useEffect(() => {
     updateCodes();
-  }, [select]);
+  }, [country]);
 
   const onSelect = (code) => {
-    setSelect(code);
-    console.log("SELECT", select);
+    setCountry(code);
+    console.log("SELECT", country);
     console.log("currency", currency);
   };
 
   const updateCodes = () => {
-    if (select === "PL") {
+    if (country === "PL") {
       setCurrency("PLN");
       setName("Poland");
       setBannerROPL(true);
-    } else if (select === "RO") {
+    } else if (country === "RO") {
       setCurrency("RON");
       setName("Romania");
       setBannerROPL(true);
-    } else if (select === "UA") {
+    } else if (country === "UA") {
       setCurrency("UAH");
       setName("Ukraine");
       setBannerROPL(false);
-    } else if (select === "US") {
+    } else if (country === "US") {
       setCurrency("USD");
       setName("United States");
       setBannerROPL(false);
-    } else if (select === "DE") {
+    } else if (country === "DE") {
       setCurrency("EUR");
       setName("Germany");
       setBannerROPL(false);
-    } else if (select === "fi") {
+    } else if (country === "fi") {
       setCurrency("EUR");
       setName("Finland");
       setBannerROPL(false);
-    } else if (select === "GB") {
+    } else if (country === "GB") {
       setCurrency("GBP");
       setName("United Kingdom");
       setBannerROPL(false);
-    } else if (select === "IE") {
+    } else if (country === "IE") {
       setCurrency("EUR");
       setName("Ireland");
       setBannerROPL(false);
-    } else if (select === "IT") {
+    } else if (country === "IT") {
       setCurrency("EUR");
       setName("Italy");
       setBannerROPL(false);
-    } else if (select === "NL") {
+    } else if (country === "NL") {
       setCurrency("EUR");
       setName("Netherlands");
       setBannerROPL(false);
-    } else if (select === "SE") {
+    } else if (country === "SE") {
       setCurrency("SEK");
       setName("Sweden");
       setBannerROPL(false);
@@ -99,7 +133,10 @@ const SendMoney = () => {
             : "bg-[#fbd721] border-0 border-red-500 h-24 flex items-center justify-center"
         }`}
       >
-        <div className="flex flex-col ">
+        <div className="relative flex flex-col ">
+          {/* Pointer */}
+          <div className="absolute -top-3 -right-1 h-5 w-5 rounded-full bg-red-600 animate-pulse" />
+
           <h1 className="text-center text-[13px] md:text-[18px]">
             Sending to <span className="font-bold">{name}? </span>Send directly
             to Western Union Ecosystem and reward your receiver{" "}
@@ -119,21 +156,9 @@ const SendMoney = () => {
               <label className="text-[14px] text-gray-400">Send to</label>
               <ReactFlagsSelect
                 className="text-center w-full rounded-xl"
-                selected={select}
+                selected={country}
                 onSelect={onSelect}
-                countries={[
-                  "PL",
-                  "RO",
-                  "UA",
-                  "US",
-                  "DE",
-                  "fi",
-                  "GB",
-                  "IE",
-                  "IT",
-                  "NL",
-                  "SE",
-                ]}
+                countries={countries}
                 searchable={true}
                 optionsSize={20}
                 showSelectedLabel={true}
@@ -177,8 +202,8 @@ const SendMoney = () => {
                   <input
                     type="number"
                     className="bg-white w-[100px] md:w-[300px] outline-none placeholder:text-black"
-                    placeholder="0"
-                    onChange={(e) => setSendAmount(e.target.value)}
+                    placeholder={fundsInAmount}
+                    onChange={(e) => setFundsInAmount(e.target.value)}
                   />
                   <p className="text-blue-500 text-[14px]">EUR</p>
                 </div>
@@ -189,13 +214,14 @@ const SendMoney = () => {
                   <input
                     type="text"
                     className="bg-white w-[100px] md:w-[300px] outline-none placeholder:text-black"
-                    placeholder={Math.round(sendAmount * rates * 100) / 100}
+                    placeholder={Math.round(fundsInAmount * rates * 100) / 100}
+                    onChange={(e) => setSendAmount(e.target.value)}
                   />
                   <p className="text-blue-500 text-[14px]"> {currency}</p>
                 </div>
               </div>
-              <div className="mt-6 mb-6 alert alert-info shadow-lg rounded-none text-[13px] md:h-5">
-                <div>
+              <div className="flex items-center mt-6 mb-6 alert alert-info shadow-lg rounded-none text-[13px] md:h-5">
+                <div className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -241,21 +267,49 @@ const SendMoney = () => {
                 How does your receiver want the money?
               </h1>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-x-2 md:w-5/6 gap-y-4">
-                <div className="border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center">
+                <div
+                  onClick={() => {
+                    setFundsOut("Cash"), setFee(2.99);
+                  }}
+                  className={`${
+                    fundsOut === "Cash" ? "bg-slate-300" : "bg-white"
+                  } border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center cursor-pointer`}
+                >
                   <BsCashCoin className="text-3xl" />
                   <p className="mt-2 text-[12px] font-bold">Cash</p>
                 </div>
-                <div className="border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center">
+                <div
+                  onClick={() => {
+                    setFundsOut("Bank"), setFee(0.0);
+                  }}
+                  className={`${
+                    fundsOut === "Bank" ? "bg-slate-300" : "bg-white"
+                  } border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center cursor-pointer`}
+                >
                   <BsBank className="text-3xl" />
                   <p className="mt-2 text-[12px] font-bold">Bank account</p>
                 </div>
-                <div className="border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center bg-slate-300">
+                <div
+                  onClick={() => {
+                    setFundsOut("Ecosystem"), setFee(0.0);
+                  }}
+                  className={`${
+                    fundsOut === "Ecosystem" ? "bg-slate-300" : "bg-white"
+                  } border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center cursor-pointer`}
+                >
                   <Image src="/wumin2.png" width="90" height="90" />
                   <p className="mt-2 text-[12px] font-bold text-center">
                     Western Union Ecosystem
                   </p>
                 </div>
-                <div className="border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center">
+                <div
+                  onClick={() => {
+                    setFundsOut("Card"), setFee(0.0);
+                  }}
+                  className={`${
+                    fundsOut === "Card" ? "bg-slate-300" : "bg-white"
+                  } border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center cursor-pointer`}
+                >
                   <Image src="/masterc2.png" width="90" height="90" />
                   <p className="mt-2 text-[12px] font-bold text-center">
                     Debit card
@@ -265,22 +319,38 @@ const SendMoney = () => {
             </div>
 
             {/* HOW WOULD YOU LIKE TO PAY */}
+
             <div className="mt-10">
               <h1 className="text-xl mt-6 mb-6">How would you like to pay?</h1>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-x-2 md:w-5/6 gap-y-4">
-                <div className="border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center bg-slate-300">
+                <div
+                  onClick={() => setFundsIn("Card")}
+                  className={`${
+                    fundsIn === "Card" ? "bg-slate-300" : "bg-white"
+                  } border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center cursor-pointer`}
+                >
                   <BsCashCoin className="text-3xl" />
                   <p className="mt-2 text-[12px] font-bold">
                     Credit/Debit card
                   </p>
                 </div>
-                <div className="border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center">
+                <div
+                  onClick={() => setFundsIn("Instant")}
+                  className={`${
+                    fundsIn === "Instant" ? "bg-slate-300" : "bg-white"
+                  } border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center cursor-pointer`}
+                >
                   <BsCashCoin className="text-3xl" />
                   <p className="mt-2 text-[12px] font-bold">
                     Instant bank transfer
                   </p>
                 </div>
-                <div className="border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center">
+                <div
+                  onClick={() => setFundsIn("Bank")}
+                  className={`${
+                    fundsIn === "Bank" ? "bg-slate-300" : "bg-white"
+                  } border-2 border-black h-28 w-36 rounded-md flex flex-col items-center justify-center cursor-pointer`}
+                >
                   <BsBank className="text-3xl" />
                   <p className="mt-2 text-[12px] font-bold">Bank transfer</p>
                 </div>
@@ -300,136 +370,7 @@ const SendMoney = () => {
 
         {/* RIGHT SIDE --------- SUMMARY */}
         <div className="flex-[40%] p-2 md:p-10">
-          {/* CURRENT SUMMARY */}
-          <div className="bg-blue-100 p-4 max-w-[400px]">
-            <h1 className="text-xl">Summary</h1>
-            <div className="mt-4">
-              <h1 className="text-[12px]">Exchange Rate</h1>
-              <hr className="h-[2px] bg-gray-500" />
-              <div className="flex justify-end">
-                <p>
-                  1.00 EUR = {rates} {currency}
-                </p>
-              </div>
-            </div>
-            <hr className="mt-8 h-[2px] bg-gray-500" />
-            <div className="flex items-center justify-between">
-              <h1 className="text-[12px]">Transfer Amount</h1>
-              <p>{sendAmount || "0"} EUR</p>
-            </div>
-            <div className="flex items-center justify-between">
-              <h1 className="text-[12px]">Transfer fee</h1>
-              <p> 0.00 EUR</p>
-            </div>
-            <div className="flex items-center justify-between">
-              <h1 className="text-[12px]">Transfer total</h1>
-              <p> {sendAmount || "0"} EUR</p>
-            </div>
-            <hr className="mt-8 h-[2px] bg-gray-500" />
-            <div className="flex items-center justify-between">
-              <h1 className="text-[12px]">Receiver gets:</h1>
-              <p>
-                {Math.round(sendAmount * rates * 100) / 100} {currency}
-              </p>
-            </div>
-            {bannerROPL && (
-              <div className="mt-2 mb-2 bg-yellow-400 p-1 flex items-center justify-between">
-                <h1 className="text-[12px] ">Ecosystem Bonus</h1>
-                <p className=""> 100 {currency}</p>
-              </div>
-            )}
-
-            <div className=" p-1 flex items-center justify-between">
-              <h1 className="text-[12px] font-bold">Total Receiver gets:</h1>
-              <p className="font-bold">
-                {Math.round(sendAmount * rates * 100) / 100 + 100} {currency}
-              </p>
-            </div>
-
-            <hr className="mt-10 h-[2px] bg-gray-500" />
-            <div className="flex items-center justify-between">
-              <h1 className="text-[12px]">Delivery time:</h1>
-              <p>In Minutes</p>
-            </div>
-          </div>
-
-          {/* SPACE FOR UPSELLLLLLLLLL ???  */}
-          <div className="border-0 border-red-600 w-fit min-w-[400px]">
-            {/* <div className="mt-4 mb-4 alert alert-warning shadow-lg max-w-[400px]">
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="stroke-current flex-shrink-0 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-                <span>Space for upsell</span>
-              </div>
-            </div> */}
-
-            {/* UPSELLLLLLLLLL ???  */}
-
-            {/* <div
-              className={`${!bannerROPL ? "hidden" : "mt-8 p-4 max-w-[400px]"}`}
-            >
-              <div className="">
-                <div className="chat chat-start">
-                  <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
-                      <img src="/favicon.png" />
-                    </div>
-                  </div>
-                  <div className="chat-bubble bg-white text-black text-xl">
-                    Sending to <span className="font-bold">{name}?</span>
-                  </div>
-                </div>
-                <div className="chat chat-start">
-                  <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
-                      <img src="/favicon.png" />
-                    </div>
-                  </div>
-                  <div className="chat-bubble bg-white text-black text-xl">
-                    Reward your receiver with 100 {currency} more by sending
-                    directly to{" "}
-                    <span className="font-bold">
-                      Western Union Digital Bank account.
-                    </span>
-                  </div>
-                </div>
-                <div className="chat chat-start">
-                  <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
-                      <img src="/favicon.png" />
-                    </div>
-                  </div>
-                  <div className="chat-bubble bg-white text-black text-xl">
-                    Don't forget to provide your{" "}
-                    <span className="font-bold">receiver's mobile number!</span>
-                  </div>
-                </div>
-                <div className="chat chat-start">
-                  <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
-                      <img src="/favicon.png" />
-                    </div>
-                  </div>
-                  <div className="chat-bubble bg-white text-black text-xl">
-                    We will reward him <span className="font-bold">100 </span>
-                    {currency} when redirecting transactions to Western Union
-                    Digital Bank Account in {name}.
-                  </div>
-                </div>
-              </div>
-            </div> */}
-          </div>
+          <Summary rates={rates} currency={currency} bannerROPL={bannerROPL} />
         </div>
       </div>
       Legal Disclaimers
